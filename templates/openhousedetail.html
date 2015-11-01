@@ -1,0 +1,57 @@
+<h2>3 Bhk Flat for rent</h2>
+<div class="chip" ng-if="event_active==true">
+    This OpenHouse is Live now
+    <i class="material-icons" style="color: green;">info</i>
+  </div>
+<div class="row">
+    <div class="col s4" ng-if="event_closed==false">
+        <nav><h5 style="padding: 10px">Requested for Entry</h5></nav>
+        <ul class="collection">
+
+            <li class="collection-item avatar" ng-repeat="p in request_list track by $index">
+                <img src="images/avatar.png" alt="" class="circle">
+                <span class="title">{{p.name }}</span>
+                <p><a href>View Profile</a>
+                </p>
+                <a ng-click="insertToConfirmedList($index)" class="secondary-content" style="right: 64px"><i class="material-icons" >done</i></a>
+                <a ng-click="rejectRequest($index)" class="secondary-content"><i class="material-icons">not_interested</i></a>
+            </li>
+            <li ng-show="request_list.length===0">No requests found</li>
+
+
+        </ul>
+    </div>
+    <div class="col s4">
+        <nav><h5 style="padding: 10px">Selected Profile</h5></nav>
+        <ul class="collection">
+
+            <li class="collection-item avatar" ng-repeat="p in confirmedList">
+                <img src="images/avatar.png" alt="" class="circle">
+                <span class="title">{{p.name}}</span>
+                <p><a href>View Profile</a>
+                </p>
+                
+            </li>
+             <li ng-show="confirmedList.length===0">No profile found</li>
+
+
+        </ul>
+    </div>
+     <div class="col s4" ng-if="event_active==true">
+        <nav><h5 style="padding: 10px">Bidding</h5></nav>
+        <ul class="collection">
+
+            <li class="collection-item avatar" ng-repeat="p in BidList | orderBy :'-bid_amount'">
+                <img src="images/avatar.png" alt="" class="circle">
+                <span class="title">{{confirmedList[p.id].name}}</span>
+                  <span class="badge">${{p.bid_amount}}</span>
+                  <p ng-show="dealcanbemade==true"><a href ng-click="disable_deal()">Make a Deal</a>
+                </p>
+              
+            </li>
+             <li ng-show="BidList.length===0">No Biddings found</li>
+
+
+        </ul>
+    </div>
+</div>

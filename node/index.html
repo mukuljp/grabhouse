@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+    <head>
+        <script src='http://localhost:3000/socket.io/socket.io.js'></script>
+        <script>
+            var socket = io();
+
+            socket.on('welcome', function(data) {
+                //addMessage(data.message);
+
+                // Respond with a message including this clients' id sent from the server
+                socket.emit('i am client', {data: 'foo!', id: data.id});
+            });
+            socket.on('time', function(data) {
+                //addMessage(data.time);
+            });
+            socket.on('error', console.error.bind(console));
+            socket.on('message', console.log.bind(console));
+             socket.on('request_openh_seller', console.log.bind(console));
+              socket.on('place_bid_seller', console.log.bind(console));
+
+            function sendRequest() {
+              var val=document.getElementById("request").value;
+             socket.emit('request_openh', {name: val});
+            }
+            function sendBid() {
+              var val=document.getElementById("bid_id").value;
+                var val1=document.getElementById("bid_amount").value;
+             socket.emit('place_bid', {id: val,amount:val1});
+            }
+            function activate(){
+                 socket.emit('activate_event', {});
+            }
+            function pay_money(){
+                 socket.emit('pay_token', {});
+            }
+            
+            function cancel_deal(){
+                socket.emit('deal_cancelled', {});
+            }
+            
+            
+        </script>
+    </head>
+    <body>
+        <input type="text" id="request" ><br>
+        <input type="button" value="put a request" onclick="sendRequest();">
+        <br>
+         <input type="text" id="bid_id" >
+         <input type="text" id="bid_amount" ><br>
+        <input type="button" value="put a Bid" onclick="sendBid();">
+        
+        <br>
+        <input type="button" value="activate an openhouse" onclick="activate();"><br>
+        <input type="button" value="pay token advance" onclick="pay_money()"> <input type="button" value="Cancelled or Timed out" onclick="cancel_deal()">
+        <ul id='messages'></ul>
+    </body>
+</html>
